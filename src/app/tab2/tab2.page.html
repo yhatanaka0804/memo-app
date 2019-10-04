@@ -8,10 +8,13 @@
 
 <ion-content>
   <ion-list>
-    <ion-item *ngFor="let list of lists">
+    <ion-item *ngFor="let list of lists; let i = index">
+      <div>
       {{list.memo}}
       <br />
       {{list.date | date: "yyyy年MM月dd日 HH:mm"}}
+      </div>
+      <ion-button slot="end" (click)="delCheck(i)"><ion-icon name="trash"></ion-icon></ion-button>
     </ion-item>
   </ion-list>
 </ion-content>
