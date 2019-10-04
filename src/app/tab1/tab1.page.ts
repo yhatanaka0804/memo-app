@@ -9,23 +9,25 @@ import { Storage } from '@ionic/storage';
 
 export class Tab1Page {
   public items: string;
-  public list: {
-    content: string,
-    date: Date;
-  };
-  public lists: [] = [];
+  lists = [];
+
 
   constructor(
     private storage: Storage,
   ) {}
 
   async ionViewWillEnter() {
+    // this.storage.clear();
     this.storage.get('items').then((items) => {
-      this.items = items ? items : [];
+      this.items = items;
     });
+
     this.storage.get('lists').then((list) => {
-      this.lists = list ? list : [];
+      if (list) {
+      this.lists = JSON.parse(list);
+      }
     });
+
   }
 
   addMemo() {
@@ -36,18 +38,18 @@ export class Tab1Page {
   ionViewWillLeave() {
     this.addMemo();
   }
-/*
+
   saveMemo() {
-    this.list = [{
-      content: this.items,
-      date: new Date()
-    }];
-    if (this.list) {
+    if (this.items) {
+    // 日付を付与
+      this.lists.push({
+        memo: this.items,
+        date: new Date(),
+      });
       // 入力があればそれを追加する
-      this.lists.push(this.list);
+      this.storage.set('lists', JSON.stringify(this.lists)).then(() => {
+      });
     }
-    this.storage.set('lists', this.list).then(() => {
-    });
   }
-*/
+
 }

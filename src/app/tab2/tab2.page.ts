@@ -17,10 +17,8 @@ export class Tab2Page {
   ) {}
 
   async ionViewWillEnter() {
-    this.lists = [
-      { title: 'title1', content: 'aaaaa', date: new Date() },
-      { title: 'title2', content: 'aaaaa', date: new Date() },
-      { title: 'title3', content: 'aaaaa', date: new Date() }
-    ];
+    this.storage.get('lists').then((list) => {
+      this.lists = JSON.parse(list);
+    });
   }
 }
